@@ -1,0 +1,79 @@
+I.
+Dataset :
+Le programme utilise un ensemble de données stocké dans un fichier CSV à l’emplacement “d:\train.csv”. Ce fichier est chargé dans la variable data à l’aide de la bibliothèque pandas.
+
+Input :
+Les entrées pour le modèle de classification sont les colonnes 1 à la fin de chaque ligne de l’ensemble de données (excluant la première colonne), qui sont stockées dans la variable x. De plus, un sous-ensemble de ces entrées est utilisé pour tester le modèle, stocké dans la variable xtest.
+
+Output :
+Les sorties attendues pour le modèle de classification sont les valeurs de la première colonne de chaque ligne de l’ensemble de données, qui sont stockées dans la variable label. De plus, un sous-ensemble de ces sorties est utilisé pour tester le modèle, stocké dans la variable actual_label.
+
+Technique utilisée :
+Le programme utilise un modèle de classification basé sur les arbres de décision, spécifiquement la classe DecisionTreeClassifier de la bibliothèque scikit-learn. Le modèle est formé (ou “fit”) sur les entrées x et les sorties label, puis utilisé pour prédire les sorties des entrées de test xtest. Ces prédictions sont ensuite comparées aux sorties de test réelles actual_label pour calculer la précision du modèle.
+
+Bruit :
+Le programme ajoute également du bruit à une image de test spécifique (la 5ème image de l’ensemble de test), modifie aléatoirement les valeurs de certains pixels, puis utilise le modèle pour prédire la sortie de cette image bruitée. L’image bruitée est ensuite affichée à l’aide de matplotlib.
+
+II.
+
+Collecte de données :
+La première étape consiste à collecter les données qui seront utilisées pour entraîner et tester le modèle. Ces données peuvent provenir de diverses sources, comme des bases de données, des fichiers CSV, des API web, etc.
+
+Prétraitement des données :
+Les données collectées sont souvent brutes et peuvent contenir des erreurs, des valeurs manquantes ou des incohérences. Le prétraitement des données vise à nettoyer et à transformer ces données en un format qui peut être utilisé pour entraîner un modèle.
+
+Division des données :
+Les données sont généralement divisées en deux ou trois ensembles : un ensemble d’entraînement, un ensemble de test et éventuellement un ensemble de validation. L’ensemble d’entraînement est utilisé pour entraîner le modèle, l’ensemble de validation est utilisé pour ajuster les hyperparamètres du modèle, et l’ensemble de test est utilisé pour évaluer la performance du modèle.
+
+Entraînement du modèle :
+Cette étape consiste à utiliser l’ensemble d’entraînement pour ajuster les paramètres du modèle. C’est à cette étape que le modèle “apprend” à partir des données.
+
+Évaluation du modèle :
+Une fois le modèle entraîné, il est évalué en utilisant l’ensemble de test. Cela permet de mesurer la performance du modèle sur des données qu’il n’a jamais vues auparavant.
+
+Optimisation :
+Sur la base des résultats de l’évaluation, le modèle peut être ajusté et optimisé pour améliorer ses performances. Cela peut impliquer l’ajustement des hyperparamètres, le choix d’un autre algorithme, l’utilisation de plus de données, etc.
+
+Déploiement :
+Une fois que le modèle a été optimisé et que sa performance est satisfaisante, il peut être déployé dans un environnement de production où il peut être utilisé pour faire des prédictions sur de nouvelles données.
+
+Surveillance et mise à jour :
+Après le déploiement, le modèle doit être surveillé pour s’assurer qu’il continue à fonctionner comme prévu. Le modèle peut nécessiter des mises à jour ou des réentraînements périodiques à mesure que de nouvelles données deviennent disponibles.
+
+
+III.
+
+Dans le programme fourni, la mesure de performance utilisée est l’exactitude (accuracy en anglais). L’exactitude est calculée comme le nombre de prédictions correctes divisé par le nombre total de prédictions. Dans ce cas, le programme compare les prédictions du modèle (p) aux vraies étiquettes (actual_label) pour les données de test. Si la prédiction correspond à la vraie étiquette, le compteur (count) est incrémenté. Enfin, l’exactitude est calculée en divisant le compteur par le nombre total de prédictions (21000 dans ce cas), et le résultat est multiplié par 100 pour obtenir un pourcentage.
+
+Voici le code qui calcule l’exactitude :
+
+count=0
+for i in range(0,21000):
+    count+=1 if p[i]==actual_label[i] else 0
+print("Accuracy=",(count/21000)*100)
+
+
+VI.
+
+Ces lignes de code ajoutent du bruit à une image de l’ensemble de test. Voici une explication détaillée :
+
+Nombre_de_pixels_errones=100 :
+Cette ligne définit le nombre de pixels de l’image qui seront modifiés pour ajouter du bruit.
+
+for i in range(Nombre_de_pixels_errones):  :
+Cette boucle s’exécute 100 fois, ce qui signifie que 100 pixels de l’image seront modifiés.
+
+position=np.random.randint(0,784,1)[0] :
+Cette ligne choisit un pixel aléatoire de l’image pour y ajouter du bruit. Les images sont de taille 28x28, donc elles ont 784 pixels en tout. Le pixel à modifier est choisi aléatoirement.
+
+bruit=np.random.randint(-200,200,1)[0] :
+Cette ligne génère un nombre aléatoire entre -200 et 200. Ce nombre sera ajouté au pixel choisi pour créer du bruit.
+
+d[position]+=bruit :
+Cette ligne ajoute le bruit généré aléatoirement au pixel choisi.
+
+d[position]=d[position]%255 :
+Cette ligne s’assure que la valeur du pixel reste dans la plage valide pour une image en niveaux de gris (0-255). Si l’ajout du bruit a entraîné une valeur supérieure à 255 ou inférieure à 0, cette ligne ramène la valeur du pixel dans la plage valide.
+
+VII.
+
